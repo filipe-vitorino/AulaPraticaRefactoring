@@ -6,7 +6,7 @@ public class Customer {
    private String _name;
    private Vector<Rental> _rentals = new Vector<Rental>();
 
-   public Customer (String name){
+   public Customer(String name){
       _name = name;
    }
 
@@ -14,7 +14,7 @@ public class Customer {
       _rentals.addElement(arg);
    }
 
-   public String getName (){
+   public String getName(){
       return _name;
    }
 
@@ -61,6 +61,24 @@ public class Customer {
          result += aRental.getFrequentRenterPoints();
       }
       
+      return result;
+   }
+
+   public String htmlStatement() {
+      Enumeration rentals = _rentals.elements();
+      String result = "<H1>Rentals for <EM>" + getName() + "</EM></H1><P>\n";
+      while (rentals.hasMoreElements()) {
+         Rental aRental = (Rental) rentals.nextElement();
+         // show figures for each rental
+         result += aRental.getMovie().getTitle()+ ": " +
+                  String.valueOf(aRental.getCharge()) + "<BR>\n";
+      }
+      
+      // add footer lines
+      result +=  "<P>You owe <EM>" + String.valueOf(getTotalCharge()) + "</EM><P>\n";
+      result += "On this rental you earned <EM>" +
+            String.valueOf(getTotalFrequentRenterPoints()) +
+            "</EM> frequent renter points<P>";
       return result;
    }
 }
